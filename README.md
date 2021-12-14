@@ -5,9 +5,9 @@
 
 >| İsim|Numara|Grup|
 >| ---------------|--------------|------------------|
->| Hayrettin Erdal|G191210098----|2. Öğretim B Grubu|
->| Emir Karabey   |G191210047----|2. Öğretim B Grubu|
->| Enes Koçer     |G191210080----|2. Öğretim B Grubu|
+>| Hayrettin Erdal|G191210098|2. Öğretim B Grubu|
+>| Emir Karabey   |G191210047|2. Öğretim B Grubu|
+>| Enes Koçer     |G191210080|2. Öğretim B Grubu|
 
 ## 2.) Ödevdeki Dizinlerin Listesi
 
