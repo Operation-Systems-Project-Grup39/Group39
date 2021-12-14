@@ -141,3 +141,60 @@ char *lsh_read_line(void)
     position++;
   }
 }
+#define LSH_TOK_BUFSIZE 80
+#define LSH_TOK_DELIM " \t\r\n\a"
+// satırı token'lara bölen metod
+char **lsh_split_line(char *line)
+{
+  int bufsize = LSH_TOK_BUFSIZE, position = 0;
+  char **tokens = malloc(bufsize * sizeof(char*));
+  char *token, **tokens_backup;
+
+  if (!tokens) {
+    fprintf(stderr, "lsh: bellek tahsis edilemedi...\n");
+    exit(EXIT_FAILURE);
+  }
+
+  token = strtok(line, LSH_TOK_DELIM);
+  while (token != NULL) {
+    tokens[position] = token;
+    position++;
+
+    if (position >= bufsize) {
+      bufsize += LSH_TOK_BUFSIZE;
+      tokens_backup = tokens;
+      tokens = realloc(tokens, bufsize * sizeof(char*));
+      if (!tokens) {
+		free(tokens_backup);
+        fprintf(stderr, "lsh: bellek tahsis edilemedi...\n");
+        exit(EXIT_FAILURE);
+      }
+    }
+
+    token = strtok(NULL, LSH_TOK_DELIM);
+  }
+  tokens[position] = NULL;
+  return tokens;
+}
+ 
+int main(int argc, char **argv)
+{
+  // lsh_loop();
+  // inputu alır ve çalıştırır
+  char *line;
+  char **args;
+  int status;
+  // Kullanıcı programı bitirene kadar sürecek olan sonsuz döngü
+  do {
+    PromptBas();
+    line = lsh_read_line();
+    args = lsh_split_line(line);
+    status = lsh_execute(args);
+
+    // bellekte çöp oluşmaması için belleğe iade ediliyor.
+    free(line);
+    free(args);
+  } while (status);
+
+  return EXIT_SUCCESS;
+}
